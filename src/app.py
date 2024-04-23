@@ -4,8 +4,7 @@ import sys
 sys.path.append('./Model')
 from flask import Flask, render_template, request, redirect, url_for
 import numpy as np
-import torch  # Import PyTorch library
-# Assuming best.pt is a PyTorch model saved using torch.save
+import torch
 import cv2
 
 from src.preprocess_image import preprocess_image
