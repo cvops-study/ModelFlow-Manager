@@ -1,0 +1,27 @@
+<div >
+  <h1>{{title}}</h1>
+  <div class="models">
+    {%for i in range(0, len)%}
+        <div class="model">
+            <a href={{url_for('model',model_name=available_models[i])}}>
+            <h2>{{available_models[i]}}</h2>
+            </a>
+        </div>
+    {%endfor%}
+  </div>
+</div>
+
+<style>
+  .model {
+      border: 1px solid black;
+      padding: 10px;
+      margin: 1%;
+      width: 46%;
+      min-width: 100px;
+  }
+  .models {
+      margin: 3px;
+      display: flex;
+      flex-wrap: wrap;
+  }
+</style>
