@@ -1,5 +1,15 @@
 <div>
-    <h1>{{model}}</h1>
+    <h1>Tag: {{model}}</h1>
+    <h2>Metrics:</h2>
+    <div class="metrics">
+        <h4>Epochs: {{metrics.Epochs}}</h4>
+        <h4>Precision: {{metrics.Precision}}</h4>
+        <h4>Recall: {{metrics.Recall}}</h4>
+        <h4>mAP@0.5: {{metrics['mAP_0.5']}}</h4>
+        <h4>mAP@0.5:0.95: {{metrics['mAP_0.5_0.95']}}</h4>
+        <h4>Mean Precision: {{metrics['Mean Precision']}}</h4>
+        <h4>Mean Recall: {{metrics['Mean Recall']}}</h4>
+    </div>
     <div class="images">
         {%for i in range(0, len)%}
             <div class="image">
@@ -27,6 +37,15 @@
     .image-src {
         width: 80%;
         height: auto;
-        margin: ;
+        margin: auto;
+    }
+    .metrics{
+        margin: 3px;
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+    .metrics h4{
+        min-width: 22%;
     }
 </style>

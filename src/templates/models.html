@@ -2,11 +2,14 @@
   <h1>{{title}}</h1>
   <div class="models">
     {%for i in range(0, len)%}
-        <div class="model">
-            <a href={{url_for('model',model_name=available_models[i])}}>
-            <h2>{{available_models[i]}}</h2>
-            </a>
-        </div>
+    <a class="model" href={{url_for('model',model_name=available_models[i].name)}}>
+      <div>
+        <h2>TAG: {{available_models[i].name}}</h2>
+        <h4>Epochs: {{available_models[i].metrics.Epochs}}</h4>
+        <h4>Precision: {{available_models[i].metrics.Precision}}</h4>
+      </div>
+      <button onclick="(e)=>{e.stopPropagation();e.preventDefault();return url_for('home')}">Try Model</button>
+    </a>
     {%endfor%}
   </div>
 </div>
@@ -14,14 +17,18 @@
 <style>
   .model {
       border: 1px solid black;
-      padding: 10px;
+      padding: 50px 30px;
       margin: 1%;
       width: 46%;
       min-width: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
   }
   .models {
       margin: 3px;
       display: flex;
       flex-wrap: wrap;
+
   }
 </style>

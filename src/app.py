@@ -6,7 +6,7 @@ import sys
 
 from flask import Flask, render_template, request, redirect, url_for
 from model.preprocess_image import preprocess_image
-from azure.index import list_containers, download_blobs
+from azure.index import list_containers, download_blob, download_blobs, extract_metrics
 
 sys.path.append('/src')
 
@@ -50,7 +50,16 @@ def predict():
 def models():
     containers = list_containers()
     available_models = [container['name'][6:] for container in containers if container['name'].startswith('model-')]
-    return render_template('models.html', len=len(available_models), available_models=available_models, title='Models')
+    for model_name in available_models:
+        model_path = STATIC_PATH + '/tmp/' + model_name
+        if not os.path.exists(model_path + '/results.txt'):
+            download_blob('model-' + model_name, "results.txt", model_path)
+    full_models = []
+    for model_name in available_models:
+        model_path = STATIC_PATH + '/tmp/' + model_name
+        metrics = extract_metrics(model_path)
+        full_models.append({'name': model_name, 'metrics': metrics})
+    return render_template('models.html', len=len(available_models), available_models=full_models, title='Models')
 
 
 @app.route('/models/<model_name>')
@@ -59,10 +68,11 @@ def model(model_name):
     load = request.args.get('load')
     if not os.path.exists(model_path) or load == '1':
         download_blobs('model-' + model_name, model_path)
-    images = os.listdir(model_path)
+    images = [image for image in os.listdir(model_path) if image.split(".")[-1] in ["jpeg", "jpg", "png"]]
+    metrics = extract_metrics(model_path)
 
     return render_template('model.html', model=model_name, images=images, title='Model', len=len(images),
-                           base_url=model_path)
+                           base_url=model_path,metrics=metrics)
 
 
 if __name__ == '__main__':
