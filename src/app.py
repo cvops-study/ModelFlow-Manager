@@ -43,14 +43,18 @@ def predict():
         try:
             device = torch.device('cpu' )
             # model = torch.load("src/model/model.pt", map_location=device)["model"]
-            model = torch.hub.load('mkang315/RCS-YOLO', 'custom', path_or_model='src/model/model.pt', force_reload=True) 
-            res = model(["https://i.imgur.com/QsYnXzR.png"])
-            res.print()
+            model = torch.hub.load('mkang315/RCS-YOLO', 'custom', path_or_model='src/model/model.pt') 
+            #res = model(["https://i.imgur.com/QsYnXzR.png"])
+           # res.print()
             # Use your model for prediction
-            output_image = model.predict(image)  # Call your model's predict function
-
+            print(image)
+            output_image = model("https://i.imgur.com/QsYnXzR.png")  # Call your model's predict function
+          
+            output_image.print()
+            print(output_image.pandas().xyxy[0])
+            output_image.save()
             # Save the output image (optional, adjust path)
-            cv2.imwrite('output.jpg', output_image)  # Assuming OpenCV for image saving
+           # cv2.imwrite('output.jpg', output_image)  # Assuming OpenCV for image saving
         
             # Display the processed image (options: show directly in the browser, redirect to a results page)
             return render_template('results.html', output_image=output_image)  # Example for results page
