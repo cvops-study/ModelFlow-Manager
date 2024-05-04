@@ -45,8 +45,8 @@ def predict():
             return "Erreur: Impossible de décoder l'image.",400
 
         #image = preprocess_image(image)  # Implement your image preprocessing logic
-        except Exception as e:
-            return f"Erreur lors du prétraitement de l'image : {str(e)}"
+        #except Exception as e:
+         #   return f"Erreur lors du prétraitement de l'image : {str(e)}"
 
         try:
             device = torch.device('cpu' )
