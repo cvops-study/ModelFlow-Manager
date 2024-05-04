@@ -40,11 +40,11 @@ def predict():
         model = torch.load("Model/model.pt", map_location=device)
 
 
-            # Check if the image is successfully decoded
-            if image is None:
-                return "Erreur: Impossible de décoder l'image.",400
+        # Check if the image is successfully decoded
+        if image is None:
+            return "Erreur: Impossible de décoder l'image.",400
 
-            image = preprocess_image(image)  # Implement your image preprocessing logic
+        #image = preprocess_image(image)  # Implement your image preprocessing logic
         except Exception as e:
             return f"Erreur lors du prétraitement de l'image : {str(e)}"
 
