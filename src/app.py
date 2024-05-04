@@ -42,7 +42,7 @@ def predict():
 
             # Check if the image is successfully decoded
             if image is None:
-                return "Erreur: Impossible de décoder l'image."
+                return "Erreur: Impossible de décoder l'image.",400
 
             image = preprocess_image(image)  # Implement your image preprocessing logic
         except Exception as e:
