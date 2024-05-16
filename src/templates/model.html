@@ -1,5 +1,8 @@
 <div>
-    <h1>Tag: {{model}}</h1>
+    <div style="display: flex; justify-content: space-between">
+        <h1>Tag: {{model}}</h1>
+        <button onclick="{{url_for('upload_test',model)}}">Test model</button>
+    </div>
     <h2>Metrics:</h2>
     <div class="metrics">
         <h4>Epochs: {{metrics.Epochs}}</h4>
