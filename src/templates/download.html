@@ -64,27 +64,11 @@
         </form>
     </div>
     <script>
-        document.getElementById('urlTagForm').addEventListener('submit', function(event) {
+      document.getElementById('urlTagForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const url = document.getElementById('url').value;
             const tag = document.getElementById('tag').value;
             alert(`URL: ${url}\nTag: ${tag}`);
-            fetch('/trigger_workflow', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ dataset_url: url, tag: tag }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert('Workflow triggered successfully');
-                } else {
-                    alert('Error triggering workflow: ' + data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
         });
     </script>
 </body>
