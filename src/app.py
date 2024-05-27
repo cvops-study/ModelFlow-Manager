@@ -65,10 +65,12 @@ def predict(model_name):
             return "Erreur: Impossible de décoder l'image.", 400
 
         model_file = os.path.join(STATIC_PATH, 'tmp', model_name)
-        download_blob('model-' + model_name + "/weights", 'best.pt', model_file)
-        print(os.path.exists(os.path.join(model_file, "best.pt")))
-        output_image = predict_image(os.path.join(model_file, "best.pt"), image)
-        return render_template('results.html', output_image=output_image)  # Example for results page
+        if os.path.exists(os.path.join(STATIC_PATH, 'tmp', 'runs')):
+            os.system("rm -rf " + os.path.join(STATIC_PATH, 'tmp', 'runs'))
+        if not os.path.exists(os.path.join(model_file, "best.pt")):
+            download_blob('model-' + model_name + "/weights", 'best.pt', model_file)
+        predict_image(os.path.join(model_file, "best.pt"), image)
+        return render_template('results.html')  # Example for results page
     else:
         return redirect(url_for('home'))
 
