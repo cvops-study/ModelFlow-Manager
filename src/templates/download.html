@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL and Tag Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter URL and Select Tag</h2>
+        <form id="urlTagForm">
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="url" id="url" name="url" placeholder="Enter URL" required>
+            </div>
+            <div class="form-group">
+                <label for="tag">Tag:</label>
+                <select id="tag" name="tag" required>
+                    <option value="" disabled selected>Select a tag</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                    <!-- Add more tags as needed -->
+                </select>
+            </div>
+            <button type="submit">Download</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('urlTagForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const url = document.getElementById('url').value;
+            const tag = document.getElementById('tag').value;
+            alert(`URL: ${url}\nTag: ${tag}`);
+            fetch('/trigger_workflow', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ dataset_url: url, tag: tag }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Workflow triggered successfully');
+                } else {
+                    alert('Error triggering workflow: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
