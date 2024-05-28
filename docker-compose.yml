@@ -7,16 +7,4 @@ services:
       - "5001:5001"
     environment:
       AZURE_STORAGE_CONNECTION_STRING: 'DefaultEndpointsProtocol=https;AccountName=kestra1cvops;AccountKey=Yrz/3SUhQUxToFl2x68UZvHnIh0hVXsj6BZvoEyCjdgbtGSFwdSrZJlgR9tJPIIo1c39t0iiSW8j+AStAW2TPA==;EndpointSuffix=core.windows.net'
-    volumes:
-      - ./src:/app/src
-      - ./templates:/app/templates
-      - ./static:/app/static
-    depends_on:
-      - azure-storage
 
-  azure-storage:
-    image: mcr.microsoft.com/azure-storage/azurite
-    ports:
-      - "10000:10000"
-      - "10001:10001"
-      - "10002:10002"
