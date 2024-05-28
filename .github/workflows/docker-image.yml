@@ -29,5 +29,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: nadamankai/flush-image:latest
+          tags: nadamankai/flask-image:latest
 
