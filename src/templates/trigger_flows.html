@@ -31,6 +31,9 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        input {
+            width: 93%;
+        }
         button {
             background-color: #007BFF;
             color: white;
@@ -41,17 +44,17 @@
         }
     </style>
 </head>
-<body>
+<body style="display: flex; justify-content: space-around">
     <div class="container">
-        <h2>Enter URL and Select Tag</h2>
-        <form id="urlTagForm">
+        <h2>Trigger Unprocessed Data extraction and downloading Flow</h2>
+        <form id="urlTagForm" action="{{ url_for('trigger_download') }}" method="post">
             <div class="form-group">
                 <label for="url">URL:</label>
                 <input type="url" id="url" name="url" placeholder="Enter URL" required>
             </div>
             <div class="form-group">
-                <label for="tag">Tag:</label>
-                <select id="tag" name="tag" required>
+                <label for="tag_2">Tag:</label>
+                <select id="tag_1" name="tag_1" required>
                     <option value="" disabled selected>Select a tag</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -63,13 +66,26 @@
             <button type="submit">Download</button>
         </form>
     </div>
-    <script>
-      document.getElementById('urlTagForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const url = document.getElementById('url').value;
-            const tag = document.getElementById('tag').value;
-            alert(`URL: ${url}\nTag: ${tag}`);
-        });
-    </script>
+    <div class="container">
+        <h2>Download Preprocessed Data and start Training Flow</h2>
+        <form id="TrainTagform" action="{{ url_for('train') }}" method="post">
+            <div class="form-group">
+                <label for="path">Data Path :</label>
+                <input id="path" name="path" placeholder="Enter Data Path" required>
+            </div>
+            <div class="form-group">
+                <label for="tag_2">Tag:</label>
+                <select id="tag_2" name="tag_2" required>
+                    <option value="" disabled selected>Select a tag</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                    <!-- Add more tags as needed -->
+                </select>
+            </div>
+            <button type="submit">Download</button>
+        </form>
+    </div>
 </body>
 </html>
