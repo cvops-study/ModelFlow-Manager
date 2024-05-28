@@ -1,5 +1,5 @@
 # Stage 1: Install dependencies
-FROM python:3.9-slim-buster as dependencies
+FROM python:3.9 as dependencies
 
 WORKDIR /app
 
