@@ -1,5 +1,5 @@
 # Stage 1: Install dependencies
-FROM python:3.8-slim-buster as dependencies
+FROM python:3.9-slim-buster as dependencies
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 # Stage 3: Create the final image
-FROM python:3.8-slim-buster
+FROM python:3.9-slim-buster
 
 LABEL authors="nada"
 
