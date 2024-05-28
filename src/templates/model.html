@@ -1,7 +1,7 @@
 <div>
     <div style="display: flex; justify-content: space-between">
         <h1>Tag: {{model}}</h1>
-        <button onclick="{{url_for('upload_test',model)}}">Test model</button>
+        <button onclick="window.location.href='{{url_for('upload_test',model_name=model)}}'">Test model</button>
     </div>
     <h2>Metrics:</h2>
     <div class="metrics">

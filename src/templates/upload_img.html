@@ -1,15 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Processing App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 400px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1, h4 {
+            text-align: center;
+            color: #343a40;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .custom-file-upload {
+            border: 2px solid #007bff;
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .custom-file-upload:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-<h1>Testing model {{model_name}}</h1>
-<h4>Upload an Image</h4>
-<!--Send Post request to this route with the image to test the model on submit-->
-<form action="{{ url_for('predict', model_name=model_name) }}" method="post" enctype="multipart/form-data">
-    <input type="file" name="image">
-    <input type="submit" value="Upload">
-</form>
+<div class="container">
+    <h1>Testing model {{model_name}}</h1>
+    <h4>Upload an Image</h4>
+    <!--Send Post request to this route with the image to test the model on submit-->
+    <form id="uploadForm" action="{{ url_for('predict', model_name=model_name) }}" method="post" enctype="multipart/form-data">
+        <label for="file-upload" class="custom-file-upload">
+            Select File
+        </label>
+        <input id="file-upload" type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+</div>
 </body>
 </html>
+

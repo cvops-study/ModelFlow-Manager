@@ -5,6 +5,15 @@
 </head>
 <body>
 <h1>Processed Image</h1>
-<img src="{{ output_image }}">
+<div style="display: flex; justify-content: space-around">
+    <div>
+        <h3>Provided</h3>
+        <img src="{{ url_for('static',filename='tmp/runs/before.jpg') }}">
+    </div>
+    <div>
+        <h3>Predicted</h3>
+        <img src="{{ url_for('static',filename='tmp/runs/output.jpg') }}">
+    </div>
+</div>
 </body>
 </html>

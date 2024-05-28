@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL and Tag Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input {
+            width: 93%;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body style="display: flex; justify-content: space-around">
+    <div class="container">
+        <h2>Trigger Unprocessed Data extraction and downloading Flow</h2>
+        <form id="urlTagForm" action="{{ url_for('trigger_download') }}" method="post">
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="url" id="url" name="url" placeholder="Enter URL" required>
+            </div>
+            <div class="form-group">
+                <label for="tag_2">Tag:</label>
+                <select id="tag_1" name="tag_1" required>
+                    <option value="" disabled selected>Select a tag</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                    <!-- Add more tags as needed -->
+                </select>
+            </div>
+            <button type="submit">Download</button>
+        </form>
+    </div>
+    <div class="container">
+        <h2>Download Preprocessed Data and start Training Flow</h2>
+        <form id="TrainTagform" action="{{ url_for('train') }}" method="post">
+            <div class="form-group">
+                <label for="path">Data Path :</label>
+                <input id="path" name="path" placeholder="Enter Data Path" required>
+            </div>
+            <div class="form-group">
+                <label for="tag_2">Tag:</label>
+                <select id="tag_2" name="tag_2" required>
+                    <option value="" disabled selected>Select a tag</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                    <!-- Add more tags as needed -->
+                </select>
+            </div>
+            <button type="submit">Download</button>
+        </form>
+    </div>
+</body>
+</html>
