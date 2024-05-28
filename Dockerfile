@@ -27,4 +27,4 @@ EXPOSE 5001
 ENV AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=kestra1cvops;AccountKey=Yrz/3SUhQUxToFl2x68UZvHnIh0hVXsj6BZvoEyCjdgbtGSFwdSrZJlgR9tJPIIo1c39t0iiSW8j+AStAW2TPA==;EndpointSuffix=core.windows.net'
 
 # Run the application
-CMD ["python", "/src/app.py"]
+CMD ["python", "src/app.py"]
