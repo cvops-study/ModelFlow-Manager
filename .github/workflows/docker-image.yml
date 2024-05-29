@@ -8,9 +8,7 @@ on:
 jobs:
   build:
     name: Build and push Docker image
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,11 +31,11 @@ jobs:
 
       - name: Copy Docker Compose file to VM
         run: |
-            sshpass -p ${{ secrets.VM_PASSWORD }} scp -o StrictHostKeyChecking=no ./docker-compose.yml ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }}:~/docker-compose.yml
-    
-          - name: Install Docker Compose on VM
-            run: |
-              sshpass -p ${{ secrets.VM_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }} 'sudo apt update && sudo apt install -y docker-compose'
+          sshpass -p ${{ secrets.VM_PASSWORD }} scp -o StrictHostKeyChecking=no ./docker-compose.yml ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }}:~/docker-compose.yml
+
+      - name: Install Docker Compose on VM
+        run: |
+          sshpass -p ${{ secrets.VM_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }} 'sudo apt update && sudo apt install -y docker-compose'
 
       - name: SSH into VM and run Docker Compose
         run: |
