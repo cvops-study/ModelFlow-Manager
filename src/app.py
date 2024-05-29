@@ -4,8 +4,8 @@ import numpy as np
 from azure.index import list_containers, download_blob, download_blobs, extract_metrics
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from model.preprocess_image import preprocess_image
-from src.kestra.trigger import trigger_workflow
-from src.model.predict import predict_image
+from kestra.trigger import trigger_workflow
+from model.predict import predict_image
 
 STATIC_PATH = os.path.join(sys.path[1], 'static')
 

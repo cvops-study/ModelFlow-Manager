@@ -1,24 +1,17 @@
 # Stage 1: Install dependencies
 FROM python:3.9 as dependencies
 
+RUN apt-get update && \
+    apt-get install -y libgl1-mesa-glx
 WORKDIR /app
 
-COPY requirements.txt .
 COPY . .
 
+RUN python -m venv venv
+RUN . venv/bin/activate
+
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-
-# Stage 3: Create the final image
-FROM python:3.9-slim-buster
-
-LABEL authors="nada"
-
-WORKDIR /app
-
-COPY --from=dependencies /app /app
+RUN pip install -r requirements.txt
 
 # Expose the port number the Flask app runs on
 EXPOSE 5001
