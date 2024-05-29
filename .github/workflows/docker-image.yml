@@ -37,6 +37,7 @@ jobs:
         run: |
           sshpass -p ${{ secrets.VM_PASSWORD }} scp -o StrictHostKeyChecking=no ./docker-compose.yml ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }}:~/docker-compose.yml
 
+
       - name: SSH into VM and run Docker Compose
         run: |
           sshpass -p ${{ secrets.VM_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }} << 'EOF'
