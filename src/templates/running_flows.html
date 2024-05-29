@@ -3,45 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Kestra Workflows</title>
+    <title>Running Flows</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 80%;
+            margin: 20px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         h1 {
             text-align: center;
+            color: #007BFF;
         }
-        .workflow-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .workflow {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
         }
-        .workflow-title {
-            font-size: 1.2em;
-            margin-bottom: 5px;
+        th {
+            background-color: #f2f2f2;
         }
-        .workflow-status {
-            font-size: 1em;
-            color: gray;
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .status {
+            font-weight: bold;
+            color: #28a745; /* Green color for running status */
+        }
+        .status:not(.running) {
+            color: #dc3545; /* Red color for non-running status */
         }
     </style>
 </head>
 <body>
-    <h1>Real-Time Kestra Workflows</h1>
-    <div class="workflow-container" id="workflow-container">
-        <!-- Workflows will be appended here -->
+    <div class="container">
+        <h1>Running Flows</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Flow ID</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flow in flows %}
+                <tr>
+                    <td>{{ flow.flow_id }}</td>
+                    <td>{{ flow.start_time }}</td>
+                    <td>{{ flow.end_time }}</td>
+                    <td class="status {{ 'running' if flow.status == 'RUNNING' else '' }}">{{ flow.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
