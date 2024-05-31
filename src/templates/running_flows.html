@@ -63,6 +63,9 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Status</th>
+                    <th>Duration</th>
+                    <th>Namespace</th>
+                    <th>Flow</th>
                 </tr>
             </thead>
             <tbody>
@@ -72,6 +75,9 @@
                     <td>{{ flow.start_time }}</td>
                     <td>{{ flow.end_time }}</td>
                     <td class="status {{ 'running' if flow.status == 'RUNNING' else '' }}">{{ flow.status }}</td>
+                    <td>{{ flow.duration }}</td>
+                    <td>{{ flow.namespace }}</td>
+                    <td>{{ flow.name }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
