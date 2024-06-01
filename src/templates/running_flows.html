@@ -3,45 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Kestra Workflows</title>
+    <title>Flows History</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 80%;
+            margin: 20px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         h1 {
             text-align: center;
+            color: #007BFF;
         }
-        .workflow-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .workflow {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
         }
-        .workflow-title {
-            font-size: 1.2em;
-            margin-bottom: 5px;
+        th {
+            background-color: #f2f2f2;
         }
-        .workflow-status {
-            font-size: 1em;
-            color: gray;
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .status.running {
+            font-weight: bold;
+            color: #007BFF; /* Green color for running status */
+        }
+        .status.success {
+            color: #28a745; /* Green color for success status */
+        }
+        .status.killed {
+            color: #b8b814; /* Red color for killed status */
+        }
+        .status {
+            color: #dc3545; /* Red color for non-running status */
         }
     </style>
 </head>
 <body>
-    <h1>Real-Time Kestra Workflows</h1>
-    <div class="workflow-container" id="workflow-container">
-        <!-- Workflows will be appended here -->
+    <div class="container">
+        <h1>{{ type }} Flows</h1>
+        <form action="/flow/data" method="get">
+            <label for="status">Status:</label>
+            <select name="status" id="status">
+                <option value="">All</option>
+                <option value="SUCCESS">Success</option>
+                <option value="KILLED">Killed</option>
+                <option value="FAILED">Failed</option>
+            </select>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date">
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date">
+            <button type="submit">Filter</button>
+        </form>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Flow ID</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Duration</th>
+                <th>Namespace</th>
+                <th>Flow</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for flow in flows %}
+            {% if (not status_filter or flow.status == status_filter) and (not start_date or flow.start_time >= start_date) and (not end_date or flow.end_time <= end_date) %}
+            <tr>
+                <td><a href='{{ flow.url }}' target="_blank">{{ flow.flow_id }}</a></td>
+                <td>{{ flow.start_time }}</td>
+                <td>{{ flow.end_time }}</td>
+                <td class="status {{ 'running' if flow.status == 'RUNNING' else 'success' if flow.status == 'SUCCESS' else 'killed' if flow.status == 'KILLED' else '' }}">{{ flow.status }}</td>
+                <td>{{ flow.duration }}</td>
+                <td>{{ flow.namespace }}</td>
+                <td>{{ flow.name }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
     </div>
 </body>
 </html>

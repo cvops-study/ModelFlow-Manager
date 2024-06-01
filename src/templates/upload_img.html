@@ -64,7 +64,6 @@
 <div class="container">
     <h1>Testing model {{model_name}}</h1>
     <h4>Upload an Image</h4>
-    <!--Send Post request to this route with the image to test the model on submit-->
     <form id="uploadForm" action="{{ url_for('predict', model_name=model_name) }}" method="post" enctype="multipart/form-data">
         <label for="file-upload" class="custom-file-upload">
             Select File

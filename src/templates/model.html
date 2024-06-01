@@ -1,54 +1,90 @@
-<div>
-    <div style="display: flex; justify-content: space-between">
-        <h1>Tag: {{model}}</h1>
-        <button onclick="window.location.href='{{url_for('upload_test',model_name=model)}}'">Test model</button>
+<div class="model-details">
+    <div class="model-header">
+        <h1>Tag: {{ model }}</h1>
+        <button onclick="window.location.href='{{ url_for('upload_test', model_name=model) }}'">Test model</button>
     </div>
     <h2>Metrics:</h2>
     <div class="metrics">
-        <h4>Epochs: {{metrics.Epochs}}</h4>
-        <h4>Precision: {{metrics.Precision}}</h4>
-        <h4>Recall: {{metrics.Recall}}</h4>
-        <h4>mAP@0.5: {{metrics['mAP_0.5']}}</h4>
-        <h4>mAP@0.5:0.95: {{metrics['mAP_0.5_0.95']}}</h4>
-        <h4>Mean Precision: {{metrics['Mean Precision']}}</h4>
-        <h4>Mean Recall: {{metrics['Mean Recall']}}</h4>
+        <div class="metric">
+            <h4>Epochs:</h4>
+            <span>{{ metrics.Epochs }}</span>
+        </div>
+        <div class="metric">
+            <h4>Precision:</h4>
+            <span>{{ metrics.Precision }}</span>
+        </div>
+        <div class="metric">
+            <h4>Recall:</h4>
+            <span>{{ metrics.Recall }}</span>
+        </div>
+        <div class="metric">
+            <h4>mAP@0.5:</h4>
+            <span>{{ metrics['mAP_0.5'] }}</span>
+        </div>
+        <div class="metric">
+            <h4>mAP@0.5:0.95:</h4>
+            <span>{{ metrics['mAP_0.5_0.95'] }}</span>
+        </div>
+        <div class="metric">
+            <h4>Mean Precision:</h4>
+            <span>{{ metrics['Mean Precision'] }}</span>
+        </div>
+        <div class="metric">
+            <h4>Mean Recall:</h4>
+            <span>{{ metrics['Mean Recall'] }}</span>
+        </div>
     </div>
     <div class="images">
-        {%for i in range(0, len)%}
-            <div class="image">
-                <h3>{{images[i]}}</h3>
-                <img class="image-src" src="{{url_for( 'static',filename='tmp/'+model +'/'+ images[i])}}" alt={{images[i]}}>
-            </div>
-        {%endfor%}
+        {% for i in range(0, len) %}
+        <div class="image">
+            <h3>{{ images[i] }}</h3>
+            <img class="image-src" src="{{ url_for('static', filename='tmp/' + model + '/' + images[i]) }}" alt="{{ images[i] }}">
+        </div>
+        {% endfor %}
     </div>
 </div>
-
 <style>
-    .image {
-        border: 0.3px solid black;
-        border-radius: 10px;
-        padding: 3px;
-        width: 46%;
-        margin: 1%;
-        min-width: 100px;
+    .model-details {
+        padding: 0 20px;
+        max-width: 1400px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 20px;
+    }
+    .model-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .metrics {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    .metric {
+        min-width: 200px;
+        max-width: 22%;
+        margin-right: 2%;
+        margin-bottom: 10px;
+    }
+    .metric h4 {
+        margin: 0;
     }
     .images {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
+    .image {
+        width: calc(50% - 20px);
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
     .image-src {
-        width: 80%;
+        max-width: 100%;
         height: auto;
-        margin: auto;
+        border-radius: 5px;
     }
-    .metrics{
-        margin: 3px;
-        display: flex;
-        flex-wrap: wrap;
 
-    }
-    .metrics h4{
-        min-width: 22%;
-    }
 </style>
