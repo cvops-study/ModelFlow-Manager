@@ -1,16 +1,19 @@
 import requests
 from datetime import datetime
-from kestra import BASE_URL
+from kestra import BASE_URL, KESTRA_SERVER
 
 
 def fetch_running_flows(namespace, workflow_id):
     response = requests.get(
-        f'{BASE_URL}/executions',
+        f'{BASE_URL}/executions/search',
         params={
             'namespace': namespace,
             'flowId': workflow_id,
+            'size': '20',
+            'sort': 'state.startDate:desc'
         }
     )
+
     if response.status_code == 200:
         data = response.json()
         running_flows = []
@@ -19,11 +22,12 @@ def fetch_running_flows(namespace, workflow_id):
             namespace = execution['namespace']
             name = execution['flowId']
             start_time = format_date(execution['state']['startDate'])
-            if execution['state']['current'] == "FAILED":
-                status = "FAILED"
+            end_time = ""
+            duration = ""
+            if execution['state']['current'] == "FAILED" or execution['state']['current'] == "KILLED":
+                status = execution['state']['current']
                 duration = format_duration(execution['state'].get('duration'))
                 end_time = format_date(execution['state'].get('endDate'))
-
             elif execution['state']['current'] == "RUNNING":
                 status = "RUNNING"
             else:
@@ -32,6 +36,7 @@ def fetch_running_flows(namespace, workflow_id):
                 end_time = format_date(execution['state'].get('endDate'))
 
             running_flows.append({
+                'url': f'{KESTRA_SERVER}/ui/executions/{namespace}/{name}/{flow_id}/logs',
                 'flow_id': flow_id,
                 'start_time': start_time,
                 'end_time': end_time,

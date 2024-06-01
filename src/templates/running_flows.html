@@ -51,6 +51,9 @@
         .status.success {
             color: #28a745; /* Green color for success status */
         }
+        .status.killed {
+            color: #b8b814; /* Red color for killed status */
+        }
         .status {
             color: #dc3545; /* Red color for non-running status */
         }
@@ -58,7 +61,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Running Flows</h1>
+        <h1>{{ type }} Flows</h1>
         <table>
             <thead>
                 <tr>
@@ -74,10 +77,10 @@
             <tbody>
                 {% for flow in flows %}
                 <tr>
-                    <td>{{ flow.flow_id }}</td>
+                    <td><a href='{{ flow.url }}' target="_blank">{{ flow.flow_id }}</a></td>
                     <td>{{ flow.start_time }}</td>
                     <td>{{ flow.end_time }}</td>
-                    <td class="status {{ 'running' if flow.status == 'RUNNING' else 'success' if flow.status == 'SUCCESS' else '' }}">{{ flow.status }}</td>
+                    <td class="status {{ 'running' if flow.status == 'RUNNING' else 'success' if flow.status == 'SUCCESS' else 'killed' if flow.status == 'KILLED' else '' }}">{{ flow.status }}</td>
                     <td>{{ flow.duration }}</td>
                     <td>{{ flow.namespace }}</td>
                     <td>{{ flow.name }}</td>

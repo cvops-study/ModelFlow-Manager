@@ -1,1 +1,2 @@
-BASE_URL = "http://48.216.240.225:8080/api/v1"
+KESTRA_SERVER = "http://48.216.240.225:8080"
+BASE_URL = KESTRA_SERVER + "/api/v1"

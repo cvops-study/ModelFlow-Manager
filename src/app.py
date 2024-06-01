@@ -89,10 +89,9 @@ def running_flows_all():
             else:
                 return jsonify({'status': 'error', 'message': result['message']}), 500
 
-        results.sort(key=lambda x: x['start_time'])
-        results.reverse()
+        results.sort(key=lambda x: x['start_time'], reverse=True)
 
-        return render_template('running_flows.html', flows=results)
+        return render_template('running_flows.html', flows=results, type='All')
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
@@ -102,7 +101,7 @@ def running_flows_test():
     try:
         result = get_running_flows(namespace='model', workflow_id='test')
         if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'])
+            return render_template('running_flows.html', flows=result['running_flows'], type='Test Model')
         else:
             return jsonify({'status': 'error', 'message': result['message']}), 500
     except Exception as e:
@@ -114,7 +113,7 @@ def running_flows_train():
     try:
         result = get_running_flows(namespace='model', workflow_id='train')
         if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'])
+            return render_template('running_flows.html', flows=result['running_flows'], type='Train Model')
         else:
             return jsonify({'status': 'error', 'message': result['message']}), 500
     except Exception as e:
@@ -126,7 +125,7 @@ def running_flows_load():
     try:
         result = get_running_flows(namespace='data', workflow_id='load-data')
         if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'])
+            return render_template('running_flows.html', flows=result['running_flows'], type='Load Data')
         else:
             return jsonify({'status': 'error', 'message': result['message']}), 500
     except Exception as e:
