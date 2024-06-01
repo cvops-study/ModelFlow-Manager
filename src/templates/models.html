@@ -1,34 +1,88 @@
-<div >
-  <h1>{{title}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model List</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+      .container {
+          max-width: 1400px;
+          margin: 20px auto;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+          text-align: center;
+      }
+      .models {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+      }
+      .model {
+          width: calc(50% - 20px);
+          max-width: 400px;
+          margin-bottom: 20px;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          transition: all 0.3s;
+          cursor: pointer;
+      }
+      .model:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .model-content {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          height: 100%;
+      }
+      .model-content h2 {
+          font-size: 1.2em;
+          margin: 0 0 20px;
+      }
+      .model-content h4 {
+          margin: 0 0 10px;
+          font-size: 1em;
+          color: #666;
+      }
+      button {
+          border: none;
+          background-color: #007bff;
+          color: #fff;
+          padding: 5px 10px;
+          border-radius: 3px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+      }
+      button:hover {
+          background-color: #0056b3;
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>{{ title }}</h1>
   <div class="models">
-    {%for i in range(0, len)%}
-    <a class="model" href={{url_for('model',model_name=available_models[i].name)}}>
-      <div>
-        <h2>TAG: {{available_models[i].name}}</h2>
-        <h4>Epochs: {{available_models[i].metrics.Epochs}}</h4>
-        <h4>Precision: {{available_models[i].metrics.Precision}}</h4>
+    {% for i in range(0, len) %}
+    <div class="model" onclick="window.location.href = '{{ url_for('model', model_name=available_models[i].name) }}'">
+      <div class="model-content">
+        <h2>TAG: {{ available_models[i].name }}</h2>
+        <h4>Epochs: {{ available_models[i].metrics.Epochs }}</h4>
+        <h4>Precision: {{ available_models[i].metrics.Precision }}</h4>
+        <button onclick="(e)=>{e.stopPropagation(); window.location.href = '{{ url_for('home') }}';}">Try Model</button>
       </div>
-      <button onclick="(e)=>{e.stopPropagation();e.preventDefault();return url_for('home')}">Try Model</button>
-    </a>
-    {%endfor%}
+    </div>
+    {% endfor %}
   </div>
 </div>
-
-<style>
-  .model {
-      border: 1px solid black;
-      padding: 50px 30px;
-      margin: 1%;
-      width: 46%;
-      min-width: 100px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
-  .models {
-      margin: 3px;
-      display: flex;
-      flex-wrap: wrap;
-
-  }
-</style>
+</body>
+</html>

@@ -4,8 +4,9 @@ import numpy as np
 from azure.index import list_containers, download_blob, download_blobs, extract_metrics
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from model.preprocess_image import preprocess_image
-from src.kestra.trigger import trigger_workflow
-from src.model.predict import predict_image
+from kestra.flows import get_running_flows
+from kestra.trigger import trigger_workflow
+from model.predict import predict_image
 
 STATIC_PATH = os.path.join(sys.path[1], 'static')
 
@@ -30,9 +31,11 @@ def models():
         if not os.path.exists(os.path.join(model_path, 'results.txt')):
             download_blob('model-' + model_name, "results.txt", model_path)
         metrics = extract_metrics(model_path)
-        full_models.append({'name': model_name, 'metrics': metrics})
+        print(metrics)
+        if metrics != {}:
+            full_models.append({'name': model_name, 'metrics': metrics})
 
-    return render_template('models.html', len=len(available_models), available_models=full_models, title='Models')
+    return render_template('models.html', len=len(full_models), available_models=full_models, title='Models')
 
 
 @app.route('/model/<model_name>')
@@ -75,8 +78,59 @@ def predict(model_name):
 
 
 @app.route('/flow')
-def flows():
-    return render_template('running_flows.html')
+def running_flows_all():
+    try:
+        results = []
+
+        for namespace, workflow_id in [('model', 'test'), ('model', 'train'), ('data', 'load-data')]:
+            result = get_running_flows(namespace, workflow_id)
+            if result['status'] == 'success':
+                results.extend(result['running_flows'])
+            else:
+                return jsonify({'status': 'error', 'message': result['message']}), 500
+
+        results.sort(key=lambda x: x['start_time'])
+        results.reverse()
+
+        return render_template('running_flows.html', flows=results)
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/flow/test')
+def running_flows_test():
+    try:
+        result = get_running_flows(namespace='model', workflow_id='test')
+        if result['status'] == 'success':
+            return render_template('running_flows.html', flows=result['running_flows'])
+        else:
+            return jsonify({'status': 'error', 'message': result['message']}), 500
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/flow/train')
+def running_flows_train():
+    try:
+        result = get_running_flows(namespace='model', workflow_id='train')
+        if result['status'] == 'success':
+            return render_template('running_flows.html', flows=result['running_flows'])
+        else:
+            return jsonify({'status': 'error', 'message': result['message']}), 500
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/flow/data')
+def running_flows_load():
+    try:
+        result = get_running_flows(namespace='data', workflow_id='load-data')
+        if result['status'] == 'success':
+            return render_template('running_flows.html', flows=result['running_flows'])
+        else:
+            return jsonify({'status': 'error', 'message': result['message']}), 500
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
 @app.route('/flow/trigger')
@@ -84,7 +138,7 @@ def trigger_flow():
     return render_template('trigger_flows.html')
 
 
-@app.route('/flow/train', methods=['POST'])
+@app.route('/flow/trigger/train', methods=['POST'])
 def train():
     try:
         directory = request.form.get('path')
@@ -116,64 +170,6 @@ def trigger_download():
 
     except Exception as e:
         raise Exception(str(e))
-
-@app.route('/flow/running_flows/test', methods=['GET'])
-def running_flows_test():
-    try:
-        result = get_running_flows(namespace='model', workflow_id='test')
-        print(result)
-        if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'])
-        else:
-            return jsonify({'status': 'error', 'message': result['message']}), 500
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-
-@app.route('/flow/running_flows/train', methods=['GET'])
-def running_flows_train():
-    try:
-        result = get_running_flows(namespace='model', workflow_id='train')
-        print(result)
-        if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'])
-        else:
-            return jsonify({'status': 'error', 'message': result['message']}), 500
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-
-@app.route('/flow/running_flows/data', methods=['GET'])
-def running_flows_load():
-    try:
-        result = get_running_flows(namespace='data', workflow_id='load-data')
-        print(result)
-        if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'])
-        else:
-            return jsonify({'status': 'error', 'message': result['message']}), 500
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-    
-    
-@app.route('/flow/running_flows/all', methods=['GET'])
-def running_flows_all():
-    try:
-        results = []
-
-        # Fetching running flows for each category
-        for namespace, workflow_id in [('model', 'test'), ('model', 'train'), ('data', 'load-data')]:
-            result = get_running_flows(namespace, workflow_id)
-            if result['status'] == 'success':
-                results.extend(result['running_flows'])
-            else:
-                return jsonify({'status': 'error', 'message': result['message']}), 500
-
-        # Sorting by start_time for better readability
-        results.sort(key=lambda x: x['start_time'])
-
-        return render_template('running_flows.html', flows=results)
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-
 
 
 if __name__ == '__main__':
