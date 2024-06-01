@@ -3,7 +3,7 @@ from datetime import datetime
 from kestra import BASE_URL, KESTRA_SERVER
 
 
-def fetch_running_flows(namespace, workflow_id, status=None, start_date=None, end_date=None):
+def fetch_running_flows(namespace, workflow_id, status, start_date, end_date):
 
     params={
         'namespace': namespace,
@@ -59,7 +59,7 @@ def fetch_running_flows(namespace, workflow_id, status=None, start_date=None, en
 
 def get_running_flows(namespace, workflow_id, status=None, start_date=None, end_date=None):
 
-    running_flows = fetch_running_flows(namespace, workflow_id, status=None, start_date=None, end_date=None)
+    running_flows = fetch_running_flows(namespace, workflow_id, status=status, start_date=start_date, end_date=end_date)
 
     return {'status': 'success', 'running_flows': running_flows}
 
