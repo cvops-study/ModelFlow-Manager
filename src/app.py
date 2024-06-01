@@ -123,9 +123,13 @@ def running_flows_train():
 @app.route('/flow/data')
 def running_flows_load():
     try:
-        result = get_running_flows(namespace='data', workflow_id='load-data')
+        status_filter = request.args.get('status')
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+
+        result = get_running_flows(namespace='data', workflow_id='load-data', status=status_filter, start_date=start_date, end_date=end_date)
         if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'], type='Load Data')
+            return render_template('running_flows.html', flows=result['running_flows'], type='Load Data', status_filter=status_filter, start_date=start_date, end_date=end_date)
         else:
             return jsonify({'status': 'error', 'message': result['message']}), 500
     except Exception as e:
