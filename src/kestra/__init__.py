@@ -1,2 +1,4 @@
-KESTRA_SERVER = "http://48.216.240.225:8080"
+from src.env.index import get_kestra_server
+
+KESTRA_SERVER = get_kestra_server()
 BASE_URL = KESTRA_SERVER + "/api/v1"

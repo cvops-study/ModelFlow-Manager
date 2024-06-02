@@ -2,9 +2,9 @@ import os
 
 from azure.storage.blob import BlobServiceClient
 from concurrent.futures import ThreadPoolExecutor
+from src.env.index import get_azure_storage_connection_string
 
-AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=kestra1cvops;AccountKey=Yrz/3SUhQUxToFl2x68UZvHnIh0hVXsj6BZvoEyCjdgbtGSFwdSrZJlgR9tJPIIo1c39t0iiSW8j+AStAW2TPA==;EndpointSuffix=core.windows.net"
-
+AZURE_STORAGE_CONNECTION_STRING = get_azure_storage_connection_string()
 
 def get_conn():
     try:

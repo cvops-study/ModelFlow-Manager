@@ -7,6 +7,7 @@ from model.preprocess_image import preprocess_image
 from kestra.flows import get_running_flows
 from kestra.trigger import trigger_workflow
 from model.predict import predict_image
+from env.index import is_prod
 
 STATIC_PATH = os.path.join(sys.path[1], 'static')
 
@@ -177,5 +178,7 @@ def trigger_download():
         raise Exception(str(e))
 
 
+print("Running in production mode: ", is_prod())
+
 if __name__ == '__main__':
-    app.run("0.0.0.0", debug=True, port=5001)
+    app.run("0.0.0.0", debug=(not is_prod()), port=5001)

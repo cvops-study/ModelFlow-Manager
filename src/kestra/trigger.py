@@ -1,6 +1,4 @@
 import requests
-from flask import jsonify
-
 
 def trigger_workflow(namespace, workflow_id, params):
     response = requests.post(

@@ -2,3 +2,4 @@
 .idea
 static/tmp/
 __pycache__
+.env
