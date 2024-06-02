@@ -2,7 +2,7 @@ name: Test and build Flask app
 
 on:
   push:
-    branches: [deployment]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -38,5 +38,6 @@ jobs:
           sshpass -p ${{ secrets.VM_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }} << 'EOF'
           cd ~
           docker compose down
+          docker image prune -f
           docker compose up -d
           EOF
