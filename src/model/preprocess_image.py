@@ -10,7 +10,6 @@ def preprocess_image(image):
     image = cv2.resize(image, (224, 224))  # Resize to your model's expected input size
     if is_image_empty(image):
         return None
-    cv2.imwrite("tmp.jpg", image)
     return image
 
 

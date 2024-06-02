@@ -67,7 +67,7 @@
         }
     </style>
 </head>
-<body>
+{% include "header.html" %}
 <div class="container">
     <h1>{{ type }} Flows</h1>
     <form class="filter-form" method="get" action="{{ url_for('running_flows_load') }}">
@@ -96,9 +96,9 @@
     <table>
         <thead>
         <tr>
-            <th><a href="{{ url_for('running_flows_load', **request.args, sort='flowId') }}">Flow ID</a></th>
-            <th><a href="{{ url_for('running_flows_load', **request.args, sort='startTime') }}">Start Time</a></th>
-            <th><a href="{{ url_for('running_flows_load', **request.args, sort='endTime') }}">End Time</a></th>
+            <th>Flow ID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
             <th>Status</th>
             <th>Duration</th>
             <th>Namespace</th>
@@ -120,5 +120,4 @@
         </tbody>
     </table>
 </div>
-</body>
 </html>

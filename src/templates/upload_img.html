@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Processing App</title>
     <style>
-        body {
+        .content {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -60,7 +60,8 @@
         }
     </style>
 </head>
-<body>
+{% include "header.html" %}
+<div class="content">
 <div class="container">
     <h1>Testing model {{model_name}}</h1>
     <h4>Upload an Image</h4>
@@ -72,6 +73,6 @@
         <input type="submit" value="Upload">
     </form>
 </div>
-</body>
+</div>
 </html>
 

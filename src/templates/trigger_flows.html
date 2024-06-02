@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL and Tag Selector</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-        }
         .container {
             max-width: 400px;
             margin: auto;
@@ -44,7 +40,8 @@
         }
     </style>
 </head>
-<body style="display: flex; justify-content: space-around">
+{% include "header.html" %}
+<div style="display: flex; justify-content: space-around">
     <div class="container">
         <h2>Trigger Unprocessed Data extraction and downloading Flow</h2>
         <form id="urlTagForm" action="{{ url_for('trigger_download') }}" method="post">
@@ -87,5 +84,5 @@
             <button type="submit">Download</button>
         </form>
     </div>
-</body>
+</div>
 </html>

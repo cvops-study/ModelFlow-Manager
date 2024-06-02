@@ -3,7 +3,7 @@
 <head>
     <title>Results</title>
 </head>
-<body>
+{% include "header.html" %}
 <h1>Processed Image</h1>
 <div style="display: flex; justify-content: space-around">
     <div>
@@ -15,5 +15,4 @@
         <img src="{{ url_for('static',filename='tmp/runs/image0.jpg') }}">
     </div>
 </div>
-</body>
 </html>

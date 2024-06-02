@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin-top : 100px;
+      }
+      .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background-color: #f8f9fa;
+          padding: 10px;
+          text-align: left;
+          display: flex;
+      }
+      .header button {
+          margin: 0 5px;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          color: #333333;
+          background-color: #f8f9fa;
+          max-width: 162px;
+          font-size: 14px;
+          font-weight: bold;
+      }
+  </style>
+  <script>
+      function navigateTo(url) {
+          window.location.href = url;
+      }
+  </script>
+</head>
+<div class="header">
+  <button onclick="navigateTo('{{ url_for('models') }}')">Models</button>
+  <button onclick="navigateTo('{{ url_for('running_flows_all') }}')">Flows History</button>
+  <button onclick="navigateTo('{{ url_for('trigger_flow') }}')">Trigger Workflows</button>
+</div>
+</html>²

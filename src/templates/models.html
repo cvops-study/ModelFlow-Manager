@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Model List</title>
   <style>
-      body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-      }
       .container {
           max-width: 1400px;
           margin: 20px auto;
@@ -68,7 +63,7 @@
       }
   </style>
 </head>
-<body>
+{% include "header.html" %}
 <div class="container">
   <h1>{{ title }}</h1>
   <div class="models">
@@ -84,5 +79,4 @@
     {% endfor %}
   </div>
 </div>
-</body>
 </html>

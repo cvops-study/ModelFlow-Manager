@@ -32,7 +32,6 @@ def models():
         if not os.path.exists(os.path.join(model_path, 'results.txt')):
             download_blob('model-' + model_name, "results.txt", model_path)
         metrics = extract_metrics(model_path)
-        print(metrics)
         if metrics != {}:
             full_models.append({'name': model_name, 'metrics': metrics})
 
@@ -151,7 +150,6 @@ def train():
         tag = request.form.get('tag_2')
         if not os.path.exists(directory):
             raise Exception(f"Directory {directory} does not exist")
-        print("bash train_model.sh " + tag + " " + directory)
         status = os.system("bash train_model.sh " + tag + " " + directory)
         if status != 0:
             raise Exception("Failed to start training")
@@ -169,16 +167,12 @@ def trigger_download():
         tag = request.form.get('tag_1')
 
         res = trigger_workflow(namespace, id, {'dataset_url': dataset_url, 'tag': tag})
-        print(res)
         if res['status'] != 'success':
             raise Exception("Failed to trigger download flow", res)
         return redirect(url_for('flows'))
 
     except Exception as e:
         raise Exception(str(e))
-
-
-print("Running in production mode: ", is_prod())
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=(not is_prod()), port=5001)

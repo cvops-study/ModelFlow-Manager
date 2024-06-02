@@ -3,23 +3,22 @@ from datetime import datetime
 from kestra import BASE_URL, KESTRA_SERVER
 
 
-def fetch_running_flows(namespace, workflow_id, status, start_date, end_date):
-
-    params={
+def fetch_running_flows(namespace, workflow_id):
+    params = {
         'namespace': namespace,
         'flowId': workflow_id,
         'size': '20',
         'sort': 'state.startDate:desc'
     }
-    if status:
-        params['state'] = status
-    if start_date:
-        params['startDate'] = start_date
-    if end_date:
-        params['endDate'] = end_date
+    # if status:
+    #     params['state'] = status
+    # if start_date:
+    #     params['startDate'] = start_date
+    # if end_date:
+    #     params['endDate'] = end_date
 
     response = requests.get(
-        f'{BASE_URL}/executions/search', params = params)
+        f'{BASE_URL}/executions/search', params=params)
     if response.status_code == 200:
         data = response.json()
         running_flows = []
@@ -57,9 +56,8 @@ def fetch_running_flows(namespace, workflow_id, status, start_date, end_date):
         raise Exception("Failed to fetch running flows: {response.text}")
 
 
-def get_running_flows(namespace, workflow_id, status=None, start_date=None, end_date=None):
-
-    running_flows = fetch_running_flows(namespace, workflow_id, status=status, start_date=start_date, end_date=end_date)
+def get_running_flows(namespace, workflow_id):
+    running_flows = fetch_running_flows(namespace, workflow_id)
 
     return {'status': 'success', 'running_flows': running_flows}
 
