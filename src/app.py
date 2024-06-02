@@ -127,9 +127,11 @@ def running_flows_load():
         start_date = request.args.get('start_date')
         end_date = request.args.get('end_date')
 
-        result = get_running_flows(namespace='data', workflow_id='load-data', status=status_filter, start_date=start_date, end_date=end_date)
+        result = get_running_flows(namespace='data', workflow_id='load-data', status=status_filter,
+                                   start_date=start_date, end_date=end_date)
         if result['status'] == 'success':
-            return render_template('running_flows.html', flows=result['running_flows'], type='Load Data', status_filter=status_filter, start_date=start_date, end_date=end_date)
+            return render_template('running_flows.html', flows=result['running_flows'], type='Load Data',
+                                   status_filter=status_filter, start_date=start_date, end_date=end_date)
         else:
             return jsonify({'status': 'error', 'message': result['message']}), 500
     except Exception as e:
@@ -176,4 +178,4 @@ def trigger_download():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run("0.0.0.0", debug=True, port=5001)
