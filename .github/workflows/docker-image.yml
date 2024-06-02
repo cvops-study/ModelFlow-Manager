@@ -29,7 +29,8 @@ jobs:
           push: true
           tags: nadamankai/flask-image:latest
 
-      - name: Copy Docker Compose file to VM
+      - name: Copy Docker Compose file to VMdocker rmi -f $(docker images -a -q)
+
         run: |
           sshpass -p ${{ secrets.VM_PASSWORD }} scp -o StrictHostKeyChecking=no ./docker-compose.yml ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }}:~/docker-compose.yml
 
@@ -39,5 +40,6 @@ jobs:
           cd ~
           docker compose down
           docker image prune -f
+          docker rmi -f $(docker images -a -q)
           docker compose up -d
           EOF
