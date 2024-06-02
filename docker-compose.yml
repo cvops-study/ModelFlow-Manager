@@ -1,10 +1,9 @@
-version: '3.8'
-
 services:
   flask-app:
     image: nadamankai/flask-image:latest
     ports:
       - "5001:5001"
-    environment:
-      AZURE_STORAGE_CONNECTION_STRING: 'DefaultEndpointsProtocol=https;AccountName=kestra1cvops;AccountKey=Yrz/3SUhQUxToFl2x68UZvHnIh0hVXsj6BZvoEyCjdgbtGSFwdSrZJlgR9tJPIIo1c39t0iiSW8j+AStAW2TPA==;EndpointSuffix=core.windows.net'
+    env_file:
+      - path: .env
+        required: true
     pull_policy: always
