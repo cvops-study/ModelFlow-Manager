@@ -1,6 +1,5 @@
 import requests
 from flask import jsonify
-from src.kestra import BASE_URL
 
 
 def trigger_workflow(namespace, workflow_id, params):
