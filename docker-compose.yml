@@ -7,3 +7,4 @@ services:
       - path: .env
         required: true
     pull_policy: always
+    restart: unless-stopped
