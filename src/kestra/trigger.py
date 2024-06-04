@@ -1,4 +1,5 @@
 import requests
+from kestra import BASE_URL
 
 def trigger_workflow(namespace, workflow_id, params):
     response = requests.post(
