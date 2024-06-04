@@ -153,7 +153,7 @@ def train():
         status = os.system("bash train_model.sh " + tag + " " + directory)
         if status != 0:
             raise Exception("Failed to start training")
-        return redirect(url_for('flows'))
+        return redirect(url_for('running_flows_all'))
     except Exception as e:
         raise Exception(str(e))
 
@@ -169,10 +169,10 @@ def trigger_download():
         res = trigger_workflow(namespace, id, {'dataset_url': dataset_url, 'tag': tag})
         if res['status'] != 'success':
             raise Exception("Failed to trigger download flow", res)
-        return redirect(url_for('flows'))
+        return redirect(url_for('running_flows_all'))
 
     except Exception as e:
         raise Exception(str(e))
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", debug=(not is_prod()), port=5001)
+    app.run("0.0.0.0", debug=(not is_prod()), port=5002)
