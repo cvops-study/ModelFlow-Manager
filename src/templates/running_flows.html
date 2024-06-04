@@ -70,29 +70,6 @@
 {% include "header.html" %}
 <div class="container">
     <h1>{{ type }} Flows</h1>
-    <form class="filter-form" method="get" action="{{ url_for('running_flows_load') }}">
-        <div>
-            <label for="start_date">Start Date:</label>
-            <input type="date" id="start_date" name="start_date" value="{{ request.args.get('start_date', '') }}">
-        </div>
-        <div>
-            <label for="end_date">End Date:</label>
-            <input type="date" id="end_date" name="end_date" value="{{ request.args.get('end_date', '') }}">
-        </div>
-        <div>
-            <label for="status">Status:</label>
-            <select id="status" name="status">
-                <option value="">All</option>
-                <option value="RUNNING" {{ 'selected' if request.args.get('status') == 'RUNNING' else '' }}>Running</option>
-                <option value="SUCCESS" {{ 'selected' if request.args.get('status') == 'SUCCESS' else '' }}>Success</option>
-                <option value="FAILED" {{ 'selected' if request.args.get('status') == 'FAILED' else '' }}>Failed</option>
-                <option value="KILLED" {{ 'selected' if request.args.get('status') == 'KILLED' else '' }}>Killed</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit">Filter</button>
-        </div>
-    </form>
     <table>
         <thead>
         <tr>

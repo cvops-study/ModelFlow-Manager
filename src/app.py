@@ -175,4 +175,4 @@ def trigger_download():
         raise Exception(str(e))
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", debug=(not is_prod()), port=5002)
+    app.run("0.0.0.0", debug=(not is_prod()), port=5001)
